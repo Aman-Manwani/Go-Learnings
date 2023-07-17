@@ -319,6 +319,27 @@ And as we can see, it prints the type as `float64` and `uint`.
 
 _Note that this is different from parsing._
 
+## Time Defining and Random Function
+Time can be Initialised by Time.Now() method and we can also change the format of the date and time we get by the format methods 
+check the below example to see the evaluation
+
+```
+// time initialization
+presentTime := time.Now()
+fmt.Println(presentTime)
+
+// to get time in a desired format use like this
+fmt.Println(presentTime.Format("01-02-2006 15:04:05 Monday"))
+
+createdDate := time.Date(2020, time.August, 10, 23, 23, 0, 0, time.UTC)
+fmt.Println(createdDate)
+
+// to get the random number of type int from 1 to 6 (dice example)
+rand.Seed(time.Now().UnixNano());
+diceNumber := rand.Intn((6))+1
+fmt.Println(diceNumber);
+
+```
 
 
 ## Alias types

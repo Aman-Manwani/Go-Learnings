@@ -2,8 +2,10 @@ package main
 
 import (
 	"bufio"
-	"math/rand"
 	"fmt"
+	"io"
+	"io/ioutil"
+	"math/rand"
 	"os"
 	"sort"
 	"strconv"
@@ -228,22 +230,42 @@ func main() {
 	tempp,tempppp := proAdder2(2,5)
 	fmt.Printf("%v  \t  %v",tempp, tempppp)
 
+	// defer in Golang
+	// These statements are executed at the end of the programs 
+	// if multiple defer statements are present in the programs , they are executed in the reverse order
+	// four three two one due to lifo property of defer
+	defer fmt.Println("one")
+	defer fmt.Println("two")
+	defer fmt.Println("three")
+	defer fmt.Println("four")
+	// gives output in defer manner
+	myDefer();
 
-	
+	// content reading and writing in a file 
+	// this can be done by os module of Golang
+	content := "this is Aman Manwani"
 
+	file,err := os.Create("./temp.txt")
 
+	if err!= nil {
+		// this panic keyword just shut down the execution of the program and show the error
+		panic(err)
+	}
 
+	length,err := io.WriteString(file, content)
+	if err!= nil {
+		fmt.Println(err);
+	}
+	fmt.Println(length);
 
+	readFile("./temp.txt")
 
+}
 
-
-
-
-
-
-
-
-
+func myDefer() {
+	for i := 0;i<5;i++{
+		defer fmt.Println(i);
+	}
 }
 
 // structs in golang
@@ -271,4 +293,14 @@ func proAdder2(values ...int) (int,string) {
 		total += val;
 	}
 	return total,"aman"
+}
+
+func readFile (filename string){
+	// below line give data in bytes, so we have to change it to string to get content
+	// data,err := ioutil.ReadFile(filename);
+	data,err := ioutil.ReadFile(filename);
+	if err!=nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(data));
 }

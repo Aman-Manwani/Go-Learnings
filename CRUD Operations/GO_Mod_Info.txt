@@ -1,0 +1,19 @@
+go mod init github.com/username/modules
+after initializing it, we get a go mod file in which module and golang version is specified
+
+gorilla/mux is the important repository/docs for backend api requests
+https://github.com/gorilla/mux
+Read DOCS from this repo readme 
+
+on importing any package from github repo like gorilla/mux, we also get a go sum file which is helpful in verify the code imported from that source
+to verify this, use command go mod verify 
+
+till the time, you are not using the third party imported things, you will see indirect comment after that module in go mod file 
+after you successfully used it in the code, 
+
+Go mod tidy refreshes all the things and code in go mod file and update all the comments like indirect in go mod file
+
+go list all command list all the packages on which our application depends
+i.e it list all the packages that are used or imported
+
+go mod why packageName command is used to get which code file is dependent on this import 

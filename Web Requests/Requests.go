@@ -79,7 +79,7 @@ func main() {
 		{"Go", 99, "tinkiey", "18 hrs", []string{"frontend", "starting"}},
 	}
 
-	// this is not possible or difficiult to read this json
+	// it is not possible or difficiult to read this json
 	// finalJson,_ := json.Marshal(coursesDone);
 
 	// to overcome above problem use this
@@ -87,17 +87,18 @@ func main() {
 	finalJson, _ := json.MarshalIndent(coursesDone, "", "\t")
 
 	fmt.Printf("%s", finalJson)
+	decodeJson();
 }
 
 type courses struct {
-	Name     string `json:"coursename"`
-	Price    int 
+	Name  string `json:"coursename"`
+	Price int
 	// this means we call the platform as website in result
 	platform string `json:"website"`
 	// this means this value should not be reflected on the result
-	time     string `json:"-"`
+	time string `json:"-"`
 	// this means all the json with value as nil will be omitted in the result
-	tags     []string `json:"tags,omitempty"`
+	tags []string `json:"tags,omitempty"`
 }
 
 func performGetRequest() {
@@ -158,4 +159,34 @@ func performPostFromReq() {
 	content, _ := ioutil.ReadAll(response.Body)
 	defer response.Body.Close()
 	fmt.Println(string(content))
+}
+
+func decodeJson() {
+	jsonData := []byte(`
+	{
+		"coursename": "Reactjs",
+		"Price": 199
+	}
+	`)
+
+	var coursess courses
+
+	checkValid := json.Valid(jsonData);
+	if checkValid {
+		fmt.Println("json was valid");
+		json.Unmarshal(jsonData,&coursess)
+		fmt.Printf("%#v\n",coursess);
+	}else{
+		fmt.Println("json was not vallid");
+	}
+
+	// some cases where you just want to add data in form of key value pairs
+	var keyValJson map[string]interface{}
+	json.Unmarshal(jsonData,&keyValJson);
+	fmt.Printf("%#v\n",keyValJson);
+
+	//  to get all the key value pairs , we can iterate through loops
+	for k,v := range keyValJson {
+		fmt.Printf("key is %v and value is %v",k,v);
+	}
 }
